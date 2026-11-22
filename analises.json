@@ -1,19 +1,364 @@
 {
   "atualizado": "2026-11-22",
   "ativos": {
+    "KLBN4": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 3.34,
+      "origem": "ambos",
+      "resumo": "O lucro e a margem caíram no 3º trimestre por custos mais altos, e a dívida segue elevada. Além disso, é a maior posição da carteira (cerca de 13%), o que pesa contra comprar mais agora.",
+      "motivos": [
+        "3T26: lucro de R$ 393 mi (−18%) e EBITDA −12%, margem caiu de ~39% para 33%",
+        "Custo-caixa por tonelada subiu 12%",
+        "Dívida líquida ~R$ 24 bi, alavancagem de 3,3x (subindo)",
+        "Safra rebaixou para neutro em 6/11; unidade de Otacílio Costa parada após acidente (18/11)",
+        "Maior peso da carteira (~13%): concentração alta",
+        "A favor: lucro veio acima do esperado e o dólar alto ajuda a receita exportadora"
+      ]
+    },
     "BBAS3": {
       "sinal": "desfavoravel",
       "data": "2026-11-22",
-      "cotacao": 14.30,
+      "cotacao": 14.3,
       "origem": "proprio",
       "resumo": "Lucro, rentabilidade e dividendos em queda, e a inadimplência do agro ainda não parou de subir. Ação barata (P/VP ~0,5), mas sem sinal de que o pior passou. Melhor esperar 1–2 trimestres de inadimplência estável.",
       "motivos": [
         "3T26: lucro ajustado de R$ 1,27 bi (−66,5% no ano) e ROE de 2,8%",
         "Inadimplência acima de 90 dias em 6,08% (agro 6,92%), ainda subindo",
-        "Projeção de lucro de 2026 cortada pela metade (R$ 9–11 bi)",
-        "Payout reduzido para 25%; sem proventos intermediários em 2027",
-        "Risco político de estatal após a eleição (possível troca de comando)",
+        "Payout reduzido para 25%; sem proventos intermediários em 2026 e 2027",
+        "XP cortou o preço-alvo de R$ 21 para R$ 15 (19/11); BTG e JPMorgan mais cautelosos",
+        "Risco político de estatal após a eleição",
         "A favor: P/VP perto de 0,5 e posição com peso moderado"
+      ]
+    },
+    "CMIG4": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 10.94,
+      "origem": "mercado",
+      "resumo": "O lucro do trimestre foi bom mesmo tirando o efeito contábil, e a dívida está sob controle. Por outro lado, os investimentos altos limitam os dividendos e, por ser estatal mineira, há risco político. Sinais mistos.",
+      "motivos": [
+        "Lucro ajustado do 3T26 de R$ 923 mi (+18%); o lucro total de R$ 1,7 bi inclui reversão de provisão",
+        "EBITDA ajustado +31% e alavancagem de 2,4x",
+        "Capex alto (R$ 5,1 bi no ano) reduz espaço para dividendos",
+        "JCP mais recente de R$ 200 mi só será pago em 2027",
+        "Queda de 11% no dia seguinte à eleição: efeito do mercado",
+        "Peso pequeno na carteira (~1,6%)"
+      ]
+    },
+    "AXIA3": {
+      "sinal": "favoravel",
+      "data": "2026-11-22",
+      "cotacao": 46.0,
+      "origem": "mercado",
+      "resumo": "A empresa segue gerando muito caixa e pagando dividendos grandes; a queda recente da ação veio do mercado após a eleição, não de problema da empresa. O lucro ajustado caiu no trimestre, o que merece acompanhamento.",
+      "motivos": [
+        "Lucro regulatório do 3T26 de R$ 3,4 bi (+77%) e EBITDA regulatório +8%",
+        "Até R$ 11,7 bi em dividendos aprovados para 2026",
+        "Alavancagem moderada (1,7x a 2,0x)",
+        "Genial mantém compra com alvo de R$ 69",
+        "Contra: lucro ajustado em IFRS caiu 19% e EBITDA IFRS −23%",
+        "Cotação abaixo do seu preço médio; peso pequeno (~1,2%)"
+      ]
+    },
+    "TAEE11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 40.37,
+      "origem": "mercado",
+      "resumo": "Resultado sólido e dividendo de 100% do lucro, típico de transmissora. Mas a dívida subiu bastante com a compra de ativos da Energisa e o preço já está acima do seu preço médio, sem grande desconto.",
+      "motivos": [
+        "Lucro regulatório do 3T26 de R$ 364 mi (+12,5%)",
+        "Dividendos de R$ 1,06 por unit (pagos em jan/27), 100% do lucro",
+        "Contra: dívida líquida subiu ~20% no trimestre, alavancagem de 4,7x",
+        "Genial recomenda manter",
+        "Receita previsível e protegida pela inflação",
+        "Cotação acima do preço médio; peso pequeno (~0,8%)"
+      ]
+    },
+    "WEGE3": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 51.13,
+      "origem": "proprio",
+      "resumo": "Empresa de altíssima qualidade, mas o trimestre veio abaixo do esperado, com margens um pouco menores por custos e tarifas nos EUA. A ação não está barata e já subiu bem acima do seu preço médio.",
+      "motivos": [
+        "3T26: lucro de R$ 1,67 bi (+0,9%), abaixo do consenso",
+        "Margem EBITDA caiu para 21,6% (−0,6 p.p.)",
+        "Pressões de cobre, aço e tarifas dos EUA",
+        "A favor: retorno sobre capital de 33% e receita externa recorde",
+        "BTG mantém compra (alvo R$ 65); dólar alto ajuda",
+        "Cotação ~20% acima do preço médio: pouco desconto"
+      ]
+    },
+    "TOTS3": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 31.11,
+      "origem": "ambos",
+      "resumo": "A operação vai bem (receita e EBITDA crescendo), mas o lucro caiu porque a empresa se endividou para comprar a Linx. A ação também sofreu com a queda geral da bolsa após a eleição.",
+      "motivos": [
+        "Receita +13% e EBITDA ajustado +17% no 3T26",
+        "Lucro ajustado de R$ 237 mi (−8,8%) por juros maiores",
+        "Dívida bruta triplicou em um ano após a compra da Linx",
+        "Receita recorrente forte (~R$ 8 bi ao ano)",
+        "Caiu 14,5% no dia seguinte à eleição: efeito do mercado",
+        "Peso pequeno na carteira (~0,6%)"
+      ]
+    },
+    "WRLD11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 158.06,
+      "origem": "mercado",
+      "resumo": "Acompanha ações do mundo todo em dólar. As bolsas lá fora caíram em novembro com a venda de ações de tecnologia e IA, mas o dólar forte compensou em reais.",
+      "motivos": [
+        "Bolsas globais em queda em novembro (S&P 500 e Nasdaq ~−2% em 19/11)",
+        "Correção forte em ações de chips e IA",
+        "Dólar subiu de R$ 5,02 para ~R$ 5,93 em um mês, protegendo o valor em reais",
+        "Mercado espera alta de juros nos EUA em dezembro",
+        "Boa diversificação contra riscos do Brasil",
+        "Cotação acima do preço médio; peso pequeno (~0,8%)"
+      ]
+    },
+    "URPR11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 15.77,
+      "origem": "proprio",
+      "resumo": "O fundo segue em crise, sem solução à vista: o resultado do 3º trimestre foi negativo e há valores a pagar relevantes sem explicação clara. É uma das maiores posições da carteira, o que pesa contra aumentar.",
+      "motivos": [
+        "Resultado contábil do 3T26 negativo em R$ 22 mi (ajuste de valor justo de −R$ 31 mi)",
+        "R$ 247 mi (quase 25% do patrimônio) em 'outros valores a pagar' sem detalhe",
+        "Dividendo estabilizou em ~R$ 0,30, bem abaixo dos ~R$ 0,80 de antes",
+        "Valor patrimonial caiu para R$ 85,33",
+        "A favor: P/VP extremamente baixo (~0,18)",
+        "Peso alto na carteira (~10%)"
+      ]
+    },
+    "HABT11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 57.8,
+      "origem": "ambos",
+      "resumo": "O dividendo vem caindo devagar e a cota caiu cerca de 18% desde junho. Não consegui ler os relatórios mais recentes para saber se há problema de crédito; por falta de informação, fica neutro.",
+      "motivos": [
+        "Dividendo caiu de R$ 0,97 (jun) para R$ 0,92 (out)",
+        "Cota caiu de ~R$ 70 para ~R$ 58 desde junho",
+        "P/VP de 0,61: desconto grande",
+        "Rendimento de 12 meses perto de 20%",
+        "Relatórios de out/nov não puderam ser verificados",
+        "Peso de ~5% na carteira"
+      ]
+    },
+    "MXRF11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 8.52,
+      "origem": "ambos",
+      "resumo": "Fundo grande e diversificado, mas fez o primeiro corte de dividendo (pequeno) e o resultado vem abaixo do pagamento há três meses, consumindo a reserva.",
+      "motivos": [
+        "Dividendo caiu de R$ 0,10 para R$ 0,095 em outubro",
+        "Resultado abaixo do pagamento por 3 meses seguidos",
+        "Reserva caiu de R$ 0,047 para ~R$ 0,021 por cota",
+        "A favor: carteira muito diversificada, sem inadimplência relevante noticiada",
+        "P/VP perto de 0,9: desconto moderado",
+        "Peso de ~4% na carteira"
+      ]
+    },
+    "ARRI11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 3.01,
+      "origem": "proprio",
+      "resumo": "Os dividendos foram cortados duas vezes e o lucro atual cobre menos da metade do que é pago, então um novo corte é provável. Há CRIs com problema sério (Ipatinga e Raposo).",
+      "motivos": [
+        "Dividendo caiu de R$ 0,09 para R$ 0,05 em 2026",
+        "Lucro de outubro ~R$ 0,02 por cota, menos da metade do pago",
+        "CRI Ipatinga com provisão de 60% e execução de garantias",
+        "CRI Raposo renegociado em setembro",
+        "Caixa baixo e pouca liquidez na bolsa",
+        "A favor: P/VP muito baixo (~0,36)"
+      ]
+    },
+    "VGHF11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 3.86,
+      "origem": "proprio",
+      "resumo": "Cortes de dividendo seguidos, perdas em crédito e dependência de vender ativos para pagar. A cota caiu cerca de 20% só em novembro.",
+      "motivos": [
+        "Dividendo caiu de R$ 0,07 para R$ 0,05 ao longo de 2026",
+        "CRIs Selina zerados e perda em cota subordinada de FIDC",
+        "Resultado não sobra em relação ao pago: sem reserva",
+        "Metade da carteira em ativos ilíquidos que geram pouco caixa",
+        "Perdendo cotistas (385 mil para 358 mil)",
+        "A favor: P/VP perto de 0,5"
+      ]
+    },
+    "JSAF11": {
+      "sinal": "favoravel",
+      "data": "2026-11-22",
+      "cotacao": 6.41,
+      "origem": "mercado",
+      "resumo": "Dividendo estável em R$ 0,08 o ano todo, sem problemas relatados e com bom caixa. A queda da cota acompanha o mercado de fundos, não um problema do próprio fundo.",
+      "motivos": [
+        "Dividendo de R$ 0,08 estável desde janeiro, sem cortes",
+        "Nenhum problema de crédito relatado",
+        "Cerca de 15% em caixa",
+        "P/VP perto de 0,78: desconto razoável",
+        "Contra: paga praticamente tudo que ganha, sem reserva",
+        "Investe em outros FIIs: sofre quando o setor cai"
+      ]
+    },
+    "VGIR11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 8.13,
+      "origem": "ambos",
+      "resumo": "O fundo não relata inadimplência e o dividendo segue alto, mas houve pequena redução, a reserva é quase zero e há concentração recente em CRIs de um mesmo devedor. A cota caiu ~16% em sete semanas sem explicação clara.",
+      "motivos": [
+        "Dividendo caiu de R$ 0,13 para R$ 0,119 em novembro",
+        "Reserva praticamente nula",
+        "~R$ 180 mi alocados em CRIs da Carvalho Hosken: concentração",
+        "Sem inadimplência relatada nos relatórios lidos",
+        "P/VP perto de 0,83",
+        "Queda forte recente da cota sem fato relevante"
+      ]
+    },
+    "GARE11": {
+      "sinal": "favoravel",
+      "data": "2026-11-22",
+      "cotacao": 7.91,
+      "origem": "mercado",
+      "resumo": "Fundo de imóveis com contratos longos, sem inadimplência e dividendo estável. A cota recuou junto com o mercado.",
+      "motivos": [
+        "Dividendo estável em ~R$ 0,08 de junho a outubro",
+        "Sem inadimplência; contratos longos (~9,7 anos)",
+        "Comprou complexo logístico alugado à BRF e Reiter Log",
+        "P/VP perto de 0,87",
+        "Contra: Carrefour ainda é ~38% da receita",
+        "Peso pequeno (~1,7%)"
+      ]
+    },
+    "CYCR11": {
+      "sinal": "favoravel",
+      "data": "2026-11-22",
+      "cotacao": 7.95,
+      "origem": "mercado",
+      "resumo": "Todos os CRIs em dia e dividendo igual há dez meses. Atenção: em outubro o resultado ficou abaixo do pago e a reserva é pequena, então pode haver leve redução.",
+      "motivos": [
+        "Dividendo de R$ 0,106 estável o ano todo",
+        "Todos os 29 CRIs adimplentes",
+        "P/VP perto de 0,82",
+        "Contra: resultado de outubro abaixo do pagamento",
+        "Reserva pequena (~R$ 0,3 mi)",
+        "Peso pequeno (~1,7%)"
+      ]
+    },
+    "VCRI11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 6.49,
+      "origem": "proprio",
+      "resumo": "Cortou o dividendo, tem três problemas de crédito em aberto e o resultado não cobre o que paga. A cota caiu forte desde setembro.",
+      "motivos": [
+        "Dividendo caiu de R$ 0,10 para R$ 0,09",
+        "CRI Serpasa em execução de garantias",
+        "CRI Ekko com vencimento antecipado",
+        "Casa e Vídeo em recuperação judicial",
+        "Resultado de R$ 0,075 contra R$ 0,09 pagos; reserva diminuindo",
+        "A favor: P/VP perto de 0,69"
+      ]
+    },
+    "SNAG11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 9.45,
+      "origem": "mercado",
+      "resumo": "O fundo vai bem: inadimplência zero, dividendo estável e reserva confortável. O sinal é neutro só pela concentração: já é uma das maiores posições (~12%) e o crédito agro em geral está em crise.",
+      "motivos": [
+        "Dividendo de R$ 0,12 estável há seis meses",
+        "Inadimplência zero",
+        "Reserva confortável (~R$ 0,10 por cota)",
+        "P/VP perto de 0,94: pouco desconto",
+        "Peso alto na carteira (~12%)",
+        "Setor agro com recorde de recuperações judiciais"
+      ]
+    },
+    "AAZQ11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 5.5,
+      "origem": "proprio",
+      "resumo": "Suspendeu os dividendos em setembro e outubro por problemas de crédito (Cotribá, Ubyfol). Há risco de novas perdas e é uma das maiores posições da carteira.",
+      "motivos": [
+        "Dividendos zerados em setembro e outubro",
+        "Cotribá inadimplente, com possível nova provisão de ~R$ 0,18 por cota",
+        "CRA Ubyfol em renegociação",
+        "Ações judiciais em caso ligado à Operação Greenwashing",
+        "Peso alto na carteira (~10%)",
+        "A favor: P/VP perto de 0,62; gestora fala em retomada gradual"
+      ]
+    },
+    "XPCA11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 6.47,
+      "origem": "ambos",
+      "resumo": "Há uma perda conhecida (Agrogalaxy) e o dividendo caiu levemente, mas a gestão diz que os demais devedores estão em dia. A cota caiu ~16% no último mês sem causa clara que eu tenha encontrado; vale cautela.",
+      "motivos": [
+        "Dividendo caiu de R$ 0,10 para R$ 0,09 em outubro",
+        "Prejuízo em agosto pela remarcação da Agrogalaxy (em recuperação judicial)",
+        "Setembro voltou a ter lucro (R$ 0,125 por cota)",
+        "P/VP perto de 0,67",
+        "Queda forte recente da cota sem explicação encontrada",
+        "Peso relevante (~7,6%) e setor agro em crise"
+      ]
+    },
+    "VGIA11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 7.82,
+      "origem": "proprio",
+      "resumo": "A cooperativa Languiru está inadimplente desde julho e representa cerca de 12% do patrimônio. Enquanto isso não se resolve, o risco de perda e de novos cortes continua.",
+      "motivos": [
+        "Languiru inadimplente desde jul/26, ~12% do patrimônio",
+        "Dividendo caiu de R$ 0,13 para R$ 0,12",
+        "Recuperação depende de execução de garantias",
+        "P/VP perto de 0,9: pouco desconto para o risco",
+        "Setor agro com recorde de recuperações judiciais",
+        "Peso de ~5% na carteira"
+      ]
+    },
+    "RURA11": {
+      "sinal": "desfavoravel",
+      "data": "2026-11-22",
+      "cotacao": 7.19,
+      "origem": "proprio",
+      "resumo": "Paga mais do que ganha (usa lucro acumulado) e os casos problemáticos já somam 9% da carteira, com novo calote do Grupo Leal. O dividendo vem caindo.",
+      "motivos": [
+        "Resultado de outubro de R$ 0,06 contra R$ 0,10 pagos",
+        "Casos com provisão somam 9,3% da carteira",
+        "Grupo Leal deixou de pagar juros; execução iniciada",
+        "Dividendo caiu de R$ 0,11 para R$ 0,09–0,10",
+        "A favor: Dacalda voltou a pagar e há lucro acumulado de R$ 11,8 mi",
+        "P/VP perto de 0,70"
+      ]
+    },
+    "RZAG11": {
+      "sinal": "neutro",
+      "data": "2026-11-22",
+      "cotacao": 7.45,
+      "origem": "ambos",
+      "resumo": "O dividendo segue estável e alto, mas há um CRA em default (Uniggel) e uma assembleia polêmica para emitir cotas a outro fundo da mesma gestora. A cota caiu ~11% em novembro.",
+      "motivos": [
+        "Dividendo de R$ 0,13 estável desde julho",
+        "Resultado abaixo do pago, usando reserva",
+        "CRA Uniggel em default, com execução de terras",
+        "Assembleia até 30/11 sobre emissão para o LSAG11, com conflito de interesses",
+        "P/VP perto de 0,78",
+        "Peso pequeno (~1,6%)"
       ]
     }
   }
