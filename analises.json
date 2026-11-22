@@ -6,14 +6,14 @@
       "data": "2026-11-22",
       "cotacao": 3.34,
       "origem": "ambos",
-      "resumo": "O lucro e a margem caíram no 3º trimestre por custos mais altos, e a dívida segue elevada. Além disso, é a maior posição da carteira (cerca de 13%), o que pesa contra comprar mais agora.",
+      "resumo": "O lucro vem caindo o ano todo (houve prejuízo no 1º trimestre) e a geração de caixa livre praticamente sumiu em 12 meses, com a dívida ainda alta. A piora é da própria empresa, somada ao mercado fraco, e ela já é a maior posição da carteira (~13%).",
       "motivos": [
-        "3T26: lucro de R$ 393 mi (−18%) e EBITDA −12%, margem caiu de ~39% para 33%",
-        "Custo-caixa por tonelada subiu 12%",
-        "Dívida líquida ~R$ 24 bi, alavancagem de 3,3x (subindo)",
-        "Safra rebaixou para neutro em 6/11; unidade de Otacílio Costa parada após acidente (18/11)",
-        "Maior peso da carteira (~13%): concentração alta",
-        "A favor: lucro veio acima do esperado e o dólar alto ajuda a receita exportadora"
+        "3T26: lucro de R$ 393 mi (−18%) e EBITDA −12%; margem caiu de ~39% para 33%",
+        "2026 fraco: prejuízo no 1T26 e lucro −34% no 2T26",
+        "Caixa livre caiu quase 99% em 12 meses",
+        "Dívida líquida ~R$ 24 bi e alavancagem de 3,3x (era 3,2x)",
+        "Safra rebaixou para neutro; unidade de Otacílio Costa parada após acidente (18/11)",
+        "A favor: lucro acima do esperado e dólar alto ajuda a exportação; contra: maior peso da carteira (~13%)"
       ]
     },
     "BBAS3": {
@@ -36,13 +36,13 @@
       "data": "2026-11-22",
       "cotacao": 10.94,
       "origem": "mercado",
-      "resumo": "O lucro do trimestre foi bom mesmo tirando o efeito contábil, e a dívida está sob controle. Por outro lado, os investimentos altos limitam os dividendos e, por ser estatal mineira, há risco político. Sinais mistos.",
+      "resumo": "O lucro do trimestre foi bom mesmo tirando a reversão pontual de provisão, e a dívida está sob controle. Mas o governador eleito descartou a privatização e a empresa trocou de CEO duas vezes em poucos meses, o que mantém o risco político alto. Sinais mistos.",
       "motivos": [
-        "Lucro ajustado do 3T26 de R$ 923 mi (+18%); o lucro total de R$ 1,7 bi inclui reversão de provisão",
+        "Lucro ajustado do 3T26 de R$ 923 mi (+18%); o lucro total de R$ 1,7 bi inclui reversão pontual de provisão",
         "EBITDA ajustado +31% e alavancagem de 2,4x",
-        "Capex alto (R$ 5,1 bi no ano) reduz espaço para dividendos",
-        "JCP mais recente de R$ 200 mi só será pago em 2027",
-        "Queda de 11% no dia seguinte à eleição: efeito do mercado",
+        "Governador eleito de MG descartou a privatização",
+        "Troca de CEO pela segunda vez em cerca de três meses",
+        "Capex alto (R$ 5,1 bi no ano) limita dividendos",
         "Peso pequeno na carteira (~1,6%)"
       ]
     },
