@@ -25,7 +25,7 @@
   .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
   .muted{color:var(--muted)} .small{font-size:12px} .big{font-size:26px;font-weight:700}
   .neg{color:var(--red)} .pos{color:var(--green)} .warnc{color:var(--warn)}
-  .pill{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--card2);color:var(--muted)}
+  .pill{font-size:11px;padding:2px 8px;white-space:nowrap;display:inline-block;border-radius:99px;background:var(--card2);color:var(--muted)}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
   .grid2 div{background:var(--card2);border-radius:10px;padding:8px 10px}
   .grid2 .l{font-size:11px;color:var(--muted)} .grid2 .v{font-size:15px;font-weight:600;margin-top:2px}
@@ -34,7 +34,7 @@
   .asset.gain{border-left-color:var(--green)}
   .tk{font-weight:700;font-size:16px}
   .nm{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
-  .res{font-weight:700;text-align:right}
+  .res{font-weight:700;text-align:right;white-space:nowrap;flex:none}
   .seg{display:flex;gap:6px;overflow-x:auto;margin:4px 0 10px;scrollbar-width:none}
   .seg button{flex:none;border:1px solid var(--line);background:transparent;color:var(--muted);
               padding:6px 12px;border-radius:99px;font-size:13px}
@@ -402,9 +402,9 @@ function telaConfig(){
 
 /* ======== veredito automático (arquivo analises.json, gerado pelo Claude) ======== */
 const SINAIS = {
-  favoravel:   {txt:'Favorável a comprar', ico:'🟢', cor:'var(--green)', bg:'var(--greenbg)'},
-  neutro:      {txt:'Neutro / aguardar',   ico:'🟡', cor:'var(--warn)',  bg:'rgba(245,184,74,.14)'},
-  desfavoravel:{txt:'Desfavorável agora',  ico:'🔴', cor:'var(--red)',   bg:'var(--redbg)'}
+  favoravel:   {curto:'Favorável', txt:'Favorável a comprar', ico:'🟢', cor:'var(--green)', bg:'var(--greenbg)'},
+  neutro:      {curto:'Neutro', txt:'Neutro / aguardar',   ico:'🟡', cor:'var(--warn)',  bg:'rgba(245,184,74,.14)'},
+  desfavoravel:{curto:'Desfavorável', txt:'Desfavorável agora',  ico:'🔴', cor:'var(--red)',   bg:'var(--redbg)'}
 };
 async function carregarAnalises(){
   try{
@@ -418,7 +418,7 @@ function veredito(t){ const v = state.analises && state.analises.ativos && state
 function seloVeredito(t){
   const v = veredito(t); if (!v) return '';
   const s = SINAIS[v.sinal];
-  return ` <span class="pill" style="background:${s.bg};color:${s.cor};font-weight:600">${s.ico} ${s.txt}</span>`;
+  return ` <span class="pill" style="background:${s.bg};color:${s.cor};font-weight:600">${s.ico} ${s.curto}</span>`;
 }
 function cardVeredito(a){
   const v = veredito(a.t);
