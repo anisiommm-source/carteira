@@ -1,5 +1,5 @@
 // Service worker: guarda o app para abrir offline. Cotações sempre vêm da rede.
-const CACHE = 'carteira-v2';
+const CACHE = 'carteira-v3';
 const FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
