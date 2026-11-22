@@ -228,6 +228,10 @@ function telaCarteira(){
     </div>
     ${T.semPM.length?`<div class="note warnc" style="margin-top:10px">Sem preço médio: ${T.semPM.map(a=>a.t).join(', ')} — toque no ativo para preencher (fica fora do cálculo de lucro/prejuízo).</div>`:''}
   </div>
+  <div style="display:flex;gap:8px;margin-bottom:10px">
+    <button class="btn" onclick="abrirOperacao('compra')">+ Registrar compra</button>
+    <button class="btn sec" style="width:auto;padding:11px 16px" onclick="abrirOperacao('venda')">− Venda</button>
+  </div>
   ${segFiltro()}
   ${TF?`<div class="card row small"><span class="muted">${filtro}: ${brl(TF.atual)}</span><span class="${cls(TF.res)}">${brl(TF.res)} (${pct(TF.resPct)})</span></div>`:''}
   <div class="seg">
@@ -247,7 +251,7 @@ function telaCarteira(){
       </div>
       <div class="row small" style="margin-top:4px"><span class="muted">Valor atual</span><b>${brl(c.atual)}</b></div>
     </div>`}).join('')}
-  <p class="note" style="text-align:center;margin:8px 0">Toque em um ativo para corrigir quantidade ou preço médio.</p>`;
+  <p class="note" style="text-align:center;margin:8px 0">Toque em um ativo para registrar compra/venda ou corrigir os valores.</p>`;
 }
 
 function telaIndicadores(){
@@ -371,11 +375,14 @@ function telaConfig(){
       <button class="btn" onclick="state.token=document.getElementById('tok').value.trim();save();go('carteira');atualizar()">Salvar e atualizar</button>
     </div>
   </div>
+  <div class="card"><b>Histórico de compras e vendas</b>
+    <div style="margin-top:6px">${telaHistorico()}</div>
+  </div>
   <div class="card"><b>Dados</b>
     <p class="note" style="margin-top:6px">Última atualização: ${fmtHora(state.lastUpdate)}</p>
     <div style="display:flex;gap:8px;margin-top:10px">
       <button class="btn sec" onclick="novoAtivo()">+ Adicionar ativo</button>
-      <button class="btn sec" onclick="if(confirm('Voltar à carteira original? Suas edições serão perdidas.')){state.ativos=structuredClone(DEFAULT);save();render()}">Restaurar</button>
+      <button class="btn sec" onclick="if(confirm('Voltar à carteira original? Suas edições serão perdidas.')){state.ativos=structuredClone(DEFAULT);state.ops=[];save();render()}">Restaurar</button>
     </div>
   </div>
   <div class="card"><b>Instalar no celular</b>
@@ -383,11 +390,121 @@ function telaConfig(){
   </div>`;
 }
 
+/* ======== compras e vendas ======== */
+const hoje = () => { const d=new Date(); return new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10); };
+function abrirOperacao(tipo, tk){
+  const d = document.getElementById('dlg');
+  const venda = tipo==='venda';
+  const opts = state.ativos.slice().sort((a,b)=>a.t.localeCompare(b.t))
+    .map(a=>`<option value="${a.t}" ${a.t===tk?'selected':''}>${a.t} — ${esc(a.n)}</option>`).join('');
+  d.innerHTML = `
+    <b style="font-size:17px">${venda?'Registrar venda':'Registrar compra'}</b>
+    <label>Ativo</label>
+    <select id="op_t" onchange="document.getElementById('op_novo').style.display=this.value==='__novo'?'block':'none';prevOp()">
+      ${opts}${venda?'':'<option value="__novo">+ Ativo novo (que ainda não tenho)</option>'}
+    </select>
+    <div id="op_novo" style="display:none">
+      <label>Ticker</label><input id="op_nt" placeholder="ex.: ITSA4" autocapitalize="characters">
+      <label>Nome</label><input id="op_nn" placeholder="ex.: Itaúsa">
+      <label>Classe</label><select id="op_nc">${CLASSES.slice(1).map(c=>`<option>${c}</option>`).join('')}</select>
+    </div>
+    <label>Quantidade ${venda?'vendida':'comprada'}</label>
+    <input id="op_q" type="number" inputmode="numeric" min="1" oninput="prevOp()">
+    <label>Preço por cota/ação (R$)</label>
+    <input id="op_p" type="text" inputmode="decimal" placeholder="ex.: 9,45" oninput="prevOp()">
+    <label>Data</label><input id="op_d" type="date" value="${hoje()}">
+    <div id="op_prev" class="note" style="margin-top:10px"></div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn sec" onclick="document.getElementById('dlg').close()">Cancelar</button>
+      <button class="btn" onclick="salvarOp('${tipo}')">${venda?'Registrar venda':'Registrar compra'}</button>
+    </div>`;
+  d.showModal();
+  if (tk==null && !venda) document.getElementById('op_t').value = state.ativos[0].t;
+  prevOp();
+}
+function prevOp(){
+  const el = document.getElementById('op_prev'); if(!el) return;
+  const t = document.getElementById('op_t').value;
+  const q = parseInt(document.getElementById('op_q').value)||0;
+  const p = pnum(document.getElementById('op_p').value);
+  const a = state.ativos.find(x=>x.t===t);
+  const venda = document.querySelector('#dlg b').textContent.includes('venda');
+  if (!q || !p){ el.innerHTML = a ? `Hoje você tem <b>${num(a.q)}</b> · preço médio <b>${brl(a.pm)}</b>` : ''; return; }
+  if (venda){
+    if (!a) return;
+    const lucro = a.pm!=null ? (p - a.pm)*q : null;
+    el.innerHTML = `Total recebido: <b>${brl(q*p)}</b><br>Fica com <b>${num(Math.max(0,a.q-q))}</b> · preço médio não muda (${brl(a.pm)})`
+      + (lucro!=null?`<br>Resultado desta venda: <b class="${cls(lucro)}">${brl(lucro)}</b>`:'')
+      + (q>a.q?`<br><span class="neg">Você só tem ${num(a.q)}.</span>`:'');
+  } else {
+    const novoQ = (a?a.q:0)+q;
+    const novoPM = a && a.pm!=null ? (a.q*a.pm + q*p)/novoQ : p;
+    el.innerHTML = `Total pago: <b>${brl(q*p)}</b><br>Passa a ter <b>${num(novoQ)}</b> · novo preço médio <b>${brl(novoPM)}</b>`
+      + (a&&a.pm!=null?` <span class="muted">(antes ${brl(a.pm)})</span>`:'');
+  }
+}
+function salvarOp(tipo){
+  let t = document.getElementById('op_t').value;
+  const q = parseInt(document.getElementById('op_q').value)||0;
+  const p = pnum(document.getElementById('op_p').value);
+  const data = document.getElementById('op_d').value || hoje();
+  if (!q || !p){ alert('Preencha quantidade e preço.'); return; }
+  let a;
+  if (t==='__novo'){
+    t = document.getElementById('op_nt').value.trim().toUpperCase();
+    if (!t){ alert('Informe o ticker.'); return; }
+    a = state.ativos.find(x=>x.t===t);
+    if (!a){
+      a = {t, n:document.getElementById('op_nn').value.trim()||t, c:document.getElementById('op_nc').value, q:0, pm:null, p, chg:null, ts:null};
+      state.ativos.push(a);
+    }
+  } else a = state.ativos.find(x=>x.t===t);
+  const antes = {q:a.q, pm:a.pm};
+  if (tipo==='venda'){
+    if (q > a.q){ alert(`Você só tem ${a.q}.`); return; }
+    a.q -= q; // preço médio não muda na venda
+  } else {
+    a.pm = a.pm!=null && a.q>0 ? (a.q*a.pm + q*p)/(a.q+q) : p;
+    a.q += q;
+  }
+  state.ops = state.ops || [];
+  state.ops.unshift({id:Date.now(), tipo, t, q, p, data, antes});
+  if (tipo==='venda' && a.q===0 && confirm(`Você zerou ${t}. Tirar da lista da carteira?`))
+    state.ativos = state.ativos.filter(x=>x!==a);
+  save(); document.getElementById('dlg').close(); render();
+  if (!a.chg && state.token) atualizar();
+}
+function desfazerOp(id){
+  const i = (state.ops||[]).findIndex(o=>o.id===id); if (i<0) return;
+  const o = state.ops[i];
+  if (i!==0 && !confirm('Esta não é a última operação deste app. Desfazer mesmo assim? O preço médio volta ao que era antes dela.')) return;
+  let a = state.ativos.find(x=>x.t===o.t);
+  if (!a){ a = {t:o.t, n:o.t, c:'Ação', q:0, pm:null, p:o.p, chg:null, ts:null}; state.ativos.push(a); }
+  a.q = o.antes.q; a.pm = o.antes.pm;
+  if (a.q===0 && o.tipo==='compra') state.ativos = state.ativos.filter(x=>x!==a);
+  state.ops.splice(i,1); save(); render();
+}
+function telaHistorico(){
+  const ops = state.ops||[];
+  if (!ops.length) return '<p class="note">Nenhuma compra ou venda registrada ainda.</p>';
+  return ops.map(o=>`
+    <div class="row small" style="padding:9px 0;border-bottom:1px solid var(--line)">
+      <div><b class="${o.tipo==='venda'?'neg':'pos'}">${o.tipo==='venda'?'Venda':'Compra'}</b> ${o.t}<br>
+        <span class="muted">${o.data.split('-').reverse().join('/')} · ${num(o.q)} × ${brl(o.p)} = ${brl(o.q*o.p)}</span></div>
+      <button class="pill" style="border:0" onclick="if(confirm('Desfazer esta ${o.tipo}?'))desfazerOp(${o.id})">Desfazer</button>
+    </div>`).join('');
+}
+
 /* ======== edição ======== */
 function editar(t){
   const a = state.ativos.find(x=>x.t===t); const d = document.getElementById('dlg');
   d.innerHTML = `
     <div class="tk">${a.t}</div><div class="nm" style="max-width:none">${esc(a.n)}</div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn" onclick="abrirOperacao('compra','${a.t}')">+ Compra</button>
+      <button class="btn sec" onclick="abrirOperacao('venda','${a.t}')">− Venda</button>
+    </div>
+    <div class="note" style="margin-top:12px">Ou corrija os valores à mão:</div>
     <label>Quantidade</label><input id="eq" type="number" inputmode="numeric" value="${a.q}">
     <label>Preço médio (R$)</label><input id="epm" type="text" inputmode="decimal" value="${a.pm!=null?String(a.pm).replace('.',','):''}">
     <label>Cotação manual (R$) <span class="small">— só se a atualização falhar</span></label><input id="ep" type="text" inputmode="decimal" value="${String(a.p).replace('.',',')}">
