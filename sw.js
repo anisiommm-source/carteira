@@ -1,6 +1,6 @@
 // Service worker: guarda o app para abrir offline. Cotações sempre vêm da rede.
-const CACHE = 'carteira-v3';
-const FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+const CACHE = 'carteira-v4';
+const FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './analises.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));

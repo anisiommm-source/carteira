@@ -242,7 +242,7 @@ function telaCarteira(){
   ${L.map(a=>{const c=calc(a); const al=emAlerta(a); return `
     <div class="card asset ${c.res<0?'loss':c.res>0?'gain':''}" onclick="editar('${a.t}')">
       <div class="row">
-        <div style="min-width:0"><div class="tk">${a.t} <span class="pill">${a.c}</span>${al?' <span class="pill" style="background:rgba(245,184,74,.18);color:var(--warn)">⚠ abaixo do PM</span>':''}</div><div class="nm">${esc(a.n)}</div></div>
+        <div style="min-width:0"><div class="tk">${a.t} <span class="pill">${a.c}</span>${al?' <span class="pill" style="background:rgba(245,184,74,.18);color:var(--warn)">⚠ abaixo do PM</span>':''}${seloVeredito(a.t)}</div><div class="nm">${esc(a.n)}</div></div>
         <div class="res ${cls(c.res)}">${brl(c.res)}<div class="small">${pct(c.resPct)}</div></div>
       </div>
       <div class="row small muted" style="margin-top:8px">
@@ -341,6 +341,7 @@ function telaAnalise(){
           <div><div class="l">Para voltar ao PM</div><div class="v ${c.volta>0?'warnc':'pos'}">${c.volta>0?pct(c.volta,1):'já acima'}</div></div>
         </div>
       </div>
+      ${cardVeredito(a)}
       ${a.pm!=null?`<button class="btn" style="margin-bottom:10px" onclick="analisarClaude('${a.t}')">✦ Analisar com o Claude: por que caiu e vale comprar?</button>`:''}
       <div class="card"><b>Simular compra</b>
         <label>Quantas cotas/ações a mais?</label>
@@ -396,6 +397,42 @@ function telaConfig(){
   </div>
   <div class="card"><b>Instalar no celular</b>
     <p class="note" style="margin-top:6px">No Chrome: menu ⋮ → <b>Instalar app</b> (ou "Adicionar à tela inicial").</p>
+  </div>`;
+}
+
+/* ======== veredito automático (arquivo analises.json, gerado pelo Claude) ======== */
+const SINAIS = {
+  favoravel:   {txt:'Favorável a comprar', ico:'🟢', cor:'var(--green)', bg:'var(--greenbg)'},
+  neutro:      {txt:'Neutro / aguardar',   ico:'🟡', cor:'var(--warn)',  bg:'rgba(245,184,74,.14)'},
+  desfavoravel:{txt:'Desfavorável agora',  ico:'🔴', cor:'var(--red)',   bg:'var(--redbg)'}
+};
+async function carregarAnalises(){
+  try{
+    const r = await fetch('analises.json?t=' + Date.now(), {cache:'no-store'});
+    if (!r.ok) return;
+    const j = await r.json();
+    if (j && j.ativos){ state.analises = j; save(); render(); }
+  }catch(e){}
+}
+function veredito(t){ const v = state.analises && state.analises.ativos && state.analises.ativos[t]; return v && SINAIS[v.sinal] ? v : null; }
+function seloVeredito(t){
+  const v = veredito(t); if (!v) return '';
+  const s = SINAIS[v.sinal];
+  return ` <span class="pill" style="background:${s.bg};color:${s.cor};font-weight:600">${s.ico} ${s.txt}</span>`;
+}
+function cardVeredito(a){
+  const v = veredito(a.t);
+  if (!v) return `<div class="card"><b>Veredito</b><p class="note" style="margin-top:6px">Ainda sem análise automática para ${a.t}. Ela aparece aqui depois da próxima rodada de análises.</p></div>`;
+  const s = SINAIS[v.sinal];
+  const mov = v.cotacao && a.p ? (a.p / v.cotacao - 1) * 100 : null;
+  const velho = mov!=null && Math.abs(mov) >= 10;
+  return `<div class="card" style="border:1px solid ${s.cor};background:${s.bg}">
+    <div class="row"><b style="color:${s.cor};font-size:17px">${s.ico} ${s.txt}</b><span class="small muted">${v.data.split('-').reverse().join('/')}</span></div>
+    <p class="note" style="margin-top:8px;color:var(--text)">${esc(v.resumo)}</p>
+    ${v.origem?`<p class="small muted" style="margin-top:6px">Queda vem ${v.origem==='mercado'?'principalmente do <b>mercado em geral</b>':v.origem==='proprio'?'principalmente do <b>próprio ativo</b>':'do <b>mercado e do próprio ativo</b>'}.</p>`:''}
+    ${v.motivos&&v.motivos.length?`<ul class="chk">${v.motivos.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''}
+    <p class="small muted" style="margin-top:6px">Cotação na análise: ${brl(v.cotacao)}${mov!=null?` · hoje ${pct(mov,1)}`:''}</p>
+    ${velho?`<p class="small warnc" style="margin-top:4px">⚠ O preço mudou bastante desde a análise — ela pode estar desatualizada.</p>`:''}
   </div>`;
 }
 
@@ -604,6 +641,7 @@ document.getElementById('refreshBtn').onclick = atualizar;
 
 setStatus(state.lastUpdate ? `Atualizado ${fmtHora(state.lastUpdate)}` : 'Cotações de 21/11 (toque em Atualizar)');
 render();
+carregarAnalises();
 if (state.token) atualizar();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
