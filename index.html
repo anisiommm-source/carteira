@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Minha Carteira</title>
+<style>
+  :root{
+    --bg:#0b1220; --card:#131c2e; --card2:#1a2540; --text:#e6edf7; --muted:#8a99b3;
+    --line:#24314d; --red:#f26d6d; --redbg:rgba(242,109,109,.12); --green:#3ecf8e;
+    --greenbg:rgba(62,207,142,.12); --accent:#14b8a6; --warn:#f5b84a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,Roboto,sans-serif;background:var(--bg);color:var(--text);
+       padding-bottom:calc(72px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+  header{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+  header h1{font-size:18px;font-weight:600}
+  header .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  main{padding:12px 14px}
+  .card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .muted{color:var(--muted)} .small{font-size:12px} .big{font-size:26px;font-weight:700}
+  .neg{color:var(--red)} .pos{color:var(--green)} .warnc{color:var(--warn)}
+  .pill{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--card2);color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .grid2 div{background:var(--card2);border-radius:10px;padding:8px 10px}
+  .grid2 .l{font-size:11px;color:var(--muted)} .grid2 .v{font-size:15px;font-weight:600;margin-top:2px}
+  .asset{border-left:4px solid transparent}
+  .asset.loss{border-left-color:var(--red);background:linear-gradient(90deg,var(--redbg),var(--card) 40%)}
+  .asset.gain{border-left-color:var(--green)}
+  .tk{font-weight:700;font-size:16px}
+  .nm{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+  .res{font-weight:700;text-align:right}
+  .seg{display:flex;gap:6px;overflow-x:auto;margin:4px 0 10px;scrollbar-width:none}
+  .seg button{flex:none;border:1px solid var(--line);background:transparent;color:var(--muted);
+              padding:6px 12px;border-radius:99px;font-size:13px}
+  .seg button.on{background:var(--accent);border-color:var(--accent);color:#04201d;font-weight:600}
+  nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--line);
+      padding-bottom:env(safe-area-inset-bottom);z-index:6}
+  nav button{flex:1;background:none;border:0;color:var(--muted);padding:10px 0 12px;font-size:11px}
+  nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px}
+  nav button.on{color:var(--accent)}
+  .btn{background:var(--accent);color:#04201d;border:0;border-radius:10px;padding:11px 14px;font-weight:600;font-size:15px;width:100%}
+  .btn.sec{background:var(--card2);color:var(--text)}
+  input{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:10px;
+        padding:11px;font-size:16px;margin-top:6px}
+  label{font-size:13px;color:var(--muted);display:block;margin-top:10px}
+  .bar{height:6px;background:var(--card2);border-radius:4px;overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;background:var(--accent)}
+  .note{font-size:12px;color:var(--muted);line-height:1.5}
+  .alert{border:1px solid var(--warn);background:rgba(245,184,74,.08)}
+  ul.chk{list-style:none;margin-top:8px} ul.chk li{font-size:13px;padding:5px 0;border-bottom:1px solid var(--line);line-height:1.4}
+  ul.chk li:last-child{border:0}
+  a{color:var(--accent)}
+  .links{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .links a{font-size:13px;background:var(--card2);padding:6px 10px;border-radius:8px;text-decoration:none}
+  dialog{background:var(--card);color:var(--text);border:0;border-radius:16px;padding:18px;width:min(92vw,420px);margin:auto}
+  dialog::backdrop{background:rgba(0,0,0,.6)}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--muted);border-top-color:transparent;border-radius:50%;animation:s .8s linear infinite;vertical-align:-2px}
+  @keyframes s{to{transform:rotate(360deg)}}
+  select{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px;font-size:16px;margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <div><h1 id="title">Carteira</h1><div class="sub" id="status">—</div></div>
+    <button class="pill" id="refreshBtn" style="border:0;padding:8px 12px;font-size:13px">↻ Atualizar</button>
+  </div>
+</header>
+<main id="view"></main>
+
+<nav>
+  <button data-tab="carteira" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M8 6V4h8v2"/></svg>Carteira</button>
+  <button data-tab="indicadores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Indicadores</button>
+  <button data-tab="analise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Análise</button>
+  <button data-tab="config"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Ajustes</button>
+</nav>
+
+<dialog id="dlg"></dialog>
+
+<script>
+/* ======== Carteira inicial (extrato B3 19/11/2026 + prints Nu Invest 21/11/2026) ======== */
+const DEFAULT = [
+  // ticker, nome, classe, quantidade, preço médio, última cotação conhecida
+  ["KLBN4","Klabin","Ação",786,3.56,3.33],
+  ["BBAS3","Banco do Brasil","Ação",122,19.00,14.30],
+  ["CMIG4","Cemig","Ação",29,11.14,10.95],
+  ["AXIA3","Axia Energia","Ação",5,49.58,46.04],
+  ["TAEE11","Taesa","Ação",4,39.24,40.19],
+  ["WEGE3","WEG","Ação",3,42.35,50.71],
+  ["TOTS3","Totvs","Ação",4,31.99,31.20],
+  ["WRLD11","Investo FTSE Global Equities","ETF",1,140.89,158.06],
+  ["URPR11","Urca Prime Renda","FII",122,38.33,15.75],
+  ["HABT11","Habitat II","FII",17,69.29,57.80],
+  ["MXRF11","Maxi Renda","FII",100,9.17,8.52],
+  ["ARRI11","Átrio Reit Recebíveis","FII",245,null,3.01],
+  ["VGHF11","Valora Hedge Fund","FII",169,6.65,3.87],
+  ["JSAF11","JS Ativos Financeiros","FII",62,7.12,6.41],
+  ["VGIR11","Valora RE III","FII",48,9.45,8.08],
+  ["GARE11","Guardian Real Estate","FII",43,8.63,7.91],
+  ["CYCR11","Cyrela Crédito","FII",42,8.26,7.95],
+  ["VCRI11","Vinci Credit Securities","FII",31,7.07,6.48],
+  ["SNAG11","Suno Agro","Fiagro",251,9.53,9.46],
+  ["AAZQ11","AZ Quest Sole","Fiagro",360,7.68,5.50],
+  ["XPCA11","XP Crédito Agrícola","Fiagro",232,7.49,6.47],
+  ["VGIA11","Valora CRA","Fiagro",121,8.17,7.82],
+  ["RURA11","Itaú Asset Rural","Fiagro",47,8.36,7.19],
+  ["RZAG11","Riza Agro","Fiagro",42,8.71,7.45],
+].map(([t,n,c,q,pm,p])=>({t,n,c,q,pm,p,chg:null,ts:null}));
+
+const LS = 'carteira.v1';
+let state = load();
+let tab = 'carteira', filtro = 'Todos', ordem = 'resultado';
+let loading = false;
+
+function load(){
+  try{
+    const s = JSON.parse(localStorage.getItem(LS));
+    if (s && Array.isArray(s.ativos)) return s;
+  }catch(e){}
+  return {ativos: structuredClone(DEFAULT), token:'', lastUpdate:null};
+}
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(state)); }catch(e){} }
+
+/* ======== utilidades ======== */
+const brl = v => v==null||isNaN(v) ? '—' : v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const pct = (v,d=2) => v==null||isNaN(v) ? '—' : (v>0?'+':'')+v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%';
+const num = v => v.toLocaleString('pt-BR');
+const cls = v => v==null ? '' : v<0 ? 'neg' : v>0 ? 'pos' : '';
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function calc(a){
+  const atual = a.q * a.p;
+  const investido = a.pm!=null ? a.q * a.pm : null;
+  const res = investido!=null ? atual - investido : null;
+  const resPct = investido ? res / investido * 100 : null;
+  const volta = a.pm!=null && a.p ? (a.pm / a.p - 1) * 100 : null; // quanto precisa subir p/ voltar ao PM
+  return {atual, investido, res, resPct, volta};
+}
+function totais(lista){
+  let atual=0, inv=0, invOk=true;
+  lista.forEach(a=>{ const c=calc(a); atual+=c.atual; if(c.investido==null) invOk=false; else inv+=c.investido; });
+  const semPM = lista.filter(a=>a.pm==null);
+  const invComPM = lista.filter(a=>a.pm!=null).reduce((s,a)=>s+a.q*a.pm,0);
+  const atualComPM = lista.filter(a=>a.pm!=null).reduce((s,a)=>s+a.q*a.p,0);
+  return {atual, inv:invComPM, res:atualComPM-invComPM, resPct: invComPM? (atualComPM-invComPM)/invComPM*100 : null, semPM};
+}
+
+/* ======== cotações (brapi.dev) ======== */
+async function fetchQuote(t, token){
+  // tenta a API v2 (chave no cabeçalho) e, se falhar, a v1 (chave na URL)
+  try{
+    const r = await fetch(`https://brapi.dev/api/v2/stocks/quote?symbols=${encodeURIComponent(t)}`,
+      {headers:{Authorization:`Bearer ${token}`}});
+    if (r.ok){
+      const j = await r.json(); const it = j.results && j.results[0]; const d = it && (it.data || it);
+      if (d && d.regularMarketPrice!=null) return d;
+    } else if (r.status===401 || r.status===429) throw new Error(r.status);
+  }catch(e){ if (e.message==='401'||e.message==='429') throw e; }
+  const r = await fetch(`https://brapi.dev/api/quote/${encodeURIComponent(t)}?token=${encodeURIComponent(token)}`);
+  if (!r.ok) throw new Error(r.status);
+  const j = await r.json(); const d = j.results && j.results[0];
+  if (!d || d.regularMarketPrice==null) throw new Error('sem dados');
+  return d;
+}
+
+async function atualizar(){
+  if (loading) return;
+  if (!state.token){ setStatus('Configure sua chave da brapi.dev em Ajustes'); go('config'); return; }
+  loading = true; setStatus('<span class="spin"></span> Atualizando cotações…');
+  let ok=0, falhas=[];
+  const fila = [...state.ativos];
+  async function worker(){
+    while (fila.length){
+      const a = fila.shift();
+      try{
+        const d = await fetchQuote(a.t, state.token);
+        a.p = d.regularMarketPrice; a.chg = d.regularMarketChangePercent ?? null;
+        a.ts = d.regularMarketTime || new Date().toISOString(); ok++;
+      }catch(e){ falhas.push(a.t + (e.message==='401'?' (chave inválida)': e.message==='429'?' (limite)':'')); }
+      render();
+    }
+  }
+  await Promise.all([worker(),worker(),worker()]);
+  loading = false;
+  if (ok){ state.lastUpdate = new Date().toISOString(); save(); }
+  setStatus(ok ? `Atualizado ${fmtHora(state.lastUpdate)}` + (falhas.length?` · falhou: ${falhas.join(', ')}`:'')
+               : `Não foi possível atualizar (${falhas.slice(0,3).join(', ')}…)`);
+  render();
+}
+function fmtHora(iso){ if(!iso) return 'nunca'; const d=new Date(iso);
+  return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' às '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+function setStatus(h){ document.getElementById('status').innerHTML = h; }
+
+/* ======== telas ======== */
+const CLASSES = ['Todos','Ação','FII','Fiagro','ETF'];
+function segFiltro(){
+  return `<div class="seg">${CLASSES.map(c=>`<button class="${c===filtro?'on':''}" onclick="filtro='${c}';render()">${c==='Ação'?'Ações':c==='FII'?'FIIs':c==='Fiagro'?'Fiagros':c}</button>`).join('')}</div>`;
+}
+function listaFiltrada(){ return state.ativos.filter(a=>filtro==='Todos'||a.c===filtro); }
+
+function telaCarteira(){
+  const T = totais(state.ativos);
+  const L = listaFiltrada().slice().sort((a,b)=>{
+    const A=calc(a), B=calc(b);
+    if (ordem==='resultado') return (A.res??0)-(B.res??0);
+    if (ordem==='pct') return (A.resPct??0)-(B.resPct??0);
+    return B.atual-A.atual;
+  });
+  const emPrejuizo = state.ativos.filter(a=>{const c=calc(a);return c.res!=null&&c.res<0;});
+  const somaPrej = emPrejuizo.reduce((s,a)=>s+calc(a).res,0);
+  const TF = filtro==='Todos'?null:totais(listaFiltrada());
+  return `
+  <div class="card">
+    <div class="small muted">Valor atual da carteira</div>
+    <div class="big">${brl(T.atual)}</div>
+    <div class="${cls(T.res)}" style="font-weight:600;margin-top:2px">${brl(T.res)} (${pct(T.resPct)}) <span class="small muted">sobre o investido</span></div>
+    <div class="grid2">
+      <div><div class="l">Investido (pelo preço médio)</div><div class="v">${brl(T.inv)}</div></div>
+      <div><div class="l">Ativos no prejuízo</div><div class="v neg">${emPrejuizo.length} de ${state.ativos.length}</div></div>
+      <div><div class="l">Soma dos prejuízos</div><div class="v neg">${brl(somaPrej)}</div></div>
+      <div><div class="l">Soma dos lucros</div><div class="v pos">${brl(T.res - somaPrej)}</div></div>
+    </div>
+    ${T.semPM.length?`<div class="note warnc" style="margin-top:10px">Sem preço médio: ${T.semPM.map(a=>a.t).join(', ')} — toque no ativo para preencher (fica fora do cálculo de lucro/prejuízo).</div>`:''}
+  </div>
+  ${segFiltro()}
+  ${TF?`<div class="card row small"><span class="muted">${filtro}: ${brl(TF.atual)}</span><span class="${cls(TF.res)}">${brl(TF.res)} (${pct(TF.resPct)})</span></div>`:''}
+  <div class="seg">
+    <button class="${ordem==='resultado'?'on':''}" onclick="ordem='resultado';render()">Maior prejuízo R$</button>
+    <button class="${ordem==='pct'?'on':''}" onclick="ordem='pct';render()">Maior queda %</button>
+    <button class="${ordem==='valor'?'on':''}" onclick="ordem='valor';render()">Maior posição</button>
+  </div>
+  ${L.map(a=>{const c=calc(a); return `
+    <div class="card asset ${c.res<0?'loss':c.res>0?'gain':''}" onclick="editar('${a.t}')">
+      <div class="row">
+        <div style="min-width:0"><div class="tk">${a.t} <span class="pill">${a.c}</span></div><div class="nm">${esc(a.n)}</div></div>
+        <div class="res ${cls(c.res)}">${brl(c.res)}<div class="small">${pct(c.resPct)}</div></div>
+      </div>
+      <div class="row small muted" style="margin-top:8px">
+        <span>${num(a.q)} × ${brl(a.p)}${a.chg!=null?` <span class="${cls(a.chg)}">(${pct(a.chg)} hoje)</span>`:''}</span>
+        <span>PM ${brl(a.pm)}</span>
+      </div>
+      <div class="row small" style="margin-top:4px"><span class="muted">Valor atual</span><b>${brl(c.atual)}</b></div>
+    </div>`}).join('')}
+  <p class="note" style="text-align:center;margin:8px 0">Toque em um ativo para corrigir quantidade ou preço médio.</p>`;
+}
+
+function telaIndicadores(){
+  const T = totais(state.ativos);
+  const porClasse = CLASSES.slice(1).map(c=>{
+    const L=state.ativos.filter(a=>a.c===c); const t=totais(L);
+    return {c, n:L.length, atual:t.atual, res:t.res, resPct:t.resPct, peso:t.atual/T.atual*100};
+  }).filter(x=>x.n);
+  const L = state.ativos.map(a=>({a, c:calc(a), peso:calc(a).atual/T.atual*100})).sort((x,y)=>y.peso-x.peso);
+  const top5 = L.slice(0,5).reduce((s,x)=>s+x.peso,0);
+  const pequenos = L.filter(x=>x.peso<2).length;
+  const alertas = [];
+  if (top5>50) alertas.push(`As 5 maiores posições somam ${pct(top5,1).replace('+','')} da carteira.`);
+  const credito = porClasse.filter(x=>x.c==='FII'||x.c==='Fiagro').reduce((s,x)=>s+x.peso,0);
+  if (credito>60) alertas.push(`${pct(credito,1).replace('+','')} está em FIIs/Fiagros — a maioria de crédito (CRI/CRA), sensíveis a juros e inadimplência.`);
+  if (pequenos>5) alertas.push(`${pequenos} ativos têm menos de 2% da carteira cada.`);
+  const fundo = L.filter(x=>x.c.resPct!=null&&x.c.resPct<-30).map(x=>x.a.t);
+  if (fundo.length) alertas.push(`Queda acima de 30% sobre o preço médio: ${fundo.join(', ')}.`);
+  return `
+  ${alertas.length?`<div class="card alert"><b class="warnc">Pontos de atenção</b><ul class="chk">${alertas.map(x=>`<li>${x}</li>`).join('')}</ul></div>`:''}
+  <div class="card"><b>Por classe</b>
+    ${porClasse.map(x=>`
+      <div style="margin-top:12px">
+        <div class="row small"><span>${x.c} <span class="muted">(${x.n})</span></span><span>${brl(x.atual)} · <b>${x.peso.toFixed(1).replace('.',',')}%</b></span></div>
+        <div class="bar"><i style="width:${x.peso}%"></i></div>
+        <div class="small ${cls(x.res)}" style="margin-top:3px">${brl(x.res)} (${pct(x.resPct)})</div>
+      </div>`).join('')}
+  </div>
+  <div class="card"><b>Cada ativo</b>
+    <div class="note" style="margin-top:4px">"Para voltar ao PM" é quanto a cotação precisa subir para você empatar.</div>
+    ${L.map(x=>`
+      <div style="padding:10px 0;border-bottom:1px solid var(--line)">
+        <div class="row"><b>${x.a.t}</b><span class="small">peso ${x.peso.toFixed(1).replace('.',',')}%</span></div>
+        <div class="bar"><i style="width:${Math.min(100,x.peso*4)}%"></i></div>
+        <div class="row small muted" style="margin-top:5px">
+          <span>Hoje: <span class="${cls(x.a.chg)}">${pct(x.a.chg)}</span></span>
+          <span>vs PM: <span class="${cls(x.c.resPct)}">${pct(x.c.resPct)}</span></span>
+          <span>${x.c.volta>0?`p/ voltar ao PM: <span class="warnc">${pct(x.c.volta,1)}</span>`:x.c.volta!=null?'<span class="pos">acima do PM</span>':''}</span>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
+let anaSel = null, anaQtd = '';
+function telaAnalise(){
+  const T = totais(state.ativos);
+  const opts = state.ativos.map(a=>`<option value="${a.t}" ${a.t===anaSel?'selected':''}>${a.t} — ${esc(a.n)}</option>`).join('');
+  let corpo = '<p class="note">Escolha um ativo para ver os dados e simular uma compra.</p>';
+  const a = state.ativos.find(x=>x.t===anaSel);
+  if (a){
+    const c = calc(a), peso = c.atual/T.atual*100;
+    const q = parseInt(anaQtd)||0;
+    const novoPM = a.pm!=null && q ? (a.q*a.pm + q*a.p)/(a.q+q) : null;
+    const custo = q*a.p;
+    const novoPeso = q ? (c.atual+custo)/(T.atual+custo)*100 : null;
+    const fundo = a.c==='FII'||a.c==='Fiagro';
+    const chk = fundo ? [
+      'P/VP: cotação abaixo do valor patrimonial pode ser desconto ou sinal de problema na carteira de crédito.',
+      'Dividendos dos últimos 12 meses: estão estáveis, subindo ou caindo?',
+      'Relatório gerencial mais recente: inadimplência, renegociação ou provisão em algum CRI/CRA?',
+      'Fatos relevantes recentes (emissões novas, mudança de gestor, amortizações).',
+      'Taxa de administração e liquidez diária.',
+      'Cenário: fundos de crédito atrelados a CDI tendem a pagar mais com Selic alta; os atrelados a IPCA oscilam com a inflação e com os juros longos.'
+    ] : a.c==='ETF' ? [
+      'O ETF acompanha o índice FTSE Global All Cap (ações do mundo todo), com exposição ao dólar.',
+      'Taxa de administração e diferença de rendimento para o índice.',
+      'Quanto você quer ter fora do Brasil (hoje: '+peso.toFixed(1).replace('.',',')+'% da carteira).'
+    ] : [
+      'Resultado dos últimos trimestres: lucro e receita crescendo ou caindo?',
+      'Endividamento (dívida líquida / EBITDA).',
+      'Dividend yield dos últimos 12 meses e se o pagamento é recorrente.',
+      'P/L comparado com o histórico da própria empresa e com o setor.',
+      'Notícias e fatos relevantes recentes (governo, regulação, preço de commodities).',
+    ];
+    const base = a.c==='Ação'||a.c==='ETF' ? 'acoes' : 'fundos-imobiliarios';
+    const slug = a.t.toLowerCase();
+    corpo = `
+      <div class="card">
+        <div class="row"><div><div class="tk">${a.t}</div><div class="nm">${esc(a.n)}</div></div><span class="pill">${a.c}</span></div>
+        <div class="grid2">
+          <div><div class="l">Cotação</div><div class="v">${brl(a.p)}</div></div>
+          <div><div class="l">Seu preço médio</div><div class="v">${brl(a.pm)}</div></div>
+          <div><div class="l">Resultado</div><div class="v ${cls(c.res)}">${brl(c.res)}</div></div>
+          <div><div class="l">vs preço médio</div><div class="v ${cls(c.resPct)}">${pct(c.resPct)}</div></div>
+          <div><div class="l">Peso na carteira</div><div class="v">${peso.toFixed(1).replace('.',',')}%</div></div>
+          <div><div class="l">Para voltar ao PM</div><div class="v ${c.volta>0?'warnc':'pos'}">${c.volta>0?pct(c.volta,1):'já acima'}</div></div>
+        </div>
+      </div>
+      <div class="card"><b>Simular compra</b>
+        <label>Quantas cotas/ações a mais?</label>
+        <input type="number" inputmode="numeric" min="0" value="${esc(anaQtd)}" oninput="anaQtd=this.value;render(true)">
+        ${q?`<div class="grid2">
+          <div><div class="l">Custo (cotação atual)</div><div class="v">${brl(custo)}</div></div>
+          <div><div class="l">Novo preço médio</div><div class="v">${brl(novoPM)}</div></div>
+          <div><div class="l">Nova quantidade</div><div class="v">${num(a.q+q)}</div></div>
+          <div><div class="l">Novo peso</div><div class="v">${novoPeso.toFixed(1).replace('.',',')}%</div></div>
+        </div>`:''}
+      </div>
+      <div class="card"><b>O que checar antes de decidir</b>
+        <ul class="chk">${chk.map(x=>`<li>☐ ${x}</li>`).join('')}</ul>
+        <div class="links">
+          <a href="https://statusinvest.com.br/${base}/${slug}" target="_blank" rel="noopener">Status Invest</a>
+          <a href="https://investidor10.com.br/${a.c==='Ação'?'acoes':a.c==='ETF'?'etfs':a.c==='Fiagro'?'fiagros':'fiis'}/${slug}/" target="_blank" rel="noopener">Investidor10</a>
+          <a href="https://www.google.com/search?q=${a.t}+fato+relevante&tbm=nws" target="_blank" rel="noopener">Notícias</a>
+        </div>
+      </div>`;
+  }
+  return `
+  <div class="card"><label style="margin-top:0">Ativo</label><select onchange="anaSel=this.value;anaQtd='';render()"><option value="">Escolha…</option>${opts}</select></div>
+  ${corpo}
+  <p class="note" style="margin:6px 4px 14px">Esta tela mostra dados e um roteiro de checagem; não é recomendação de compra ou venda. A decisão depende dos seus objetivos, prazo e tolerância a risco — na dúvida, fale com um profissional certificado (CFP/CNPI).</p>`;
+}
+
+function telaConfig(){
+  return `
+  <div class="card"><b>Chave da brapi.dev</b>
+    <p class="note" style="margin-top:6px">As cotações vêm da brapi.dev (plano gratuito). Crie a conta em <a href="https://brapi.dev/dashboard" target="_blank" rel="noopener">brapi.dev/dashboard</a>, copie seu token e cole aqui. Ele fica salvo só neste celular.</p>
+    <label>Token</label>
+    <input id="tok" type="password" autocomplete="off" value="${esc(state.token)}" placeholder="cole seu token aqui">
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn" onclick="state.token=document.getElementById('tok').value.trim();save();go('carteira');atualizar()">Salvar e atualizar</button>
+    </div>
+  </div>
+  <div class="card"><b>Dados</b>
+    <p class="note" style="margin-top:6px">Última atualização: ${fmtHora(state.lastUpdate)}</p>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn sec" onclick="novoAtivo()">+ Adicionar ativo</button>
+      <button class="btn sec" onclick="if(confirm('Voltar à carteira original? Suas edições serão perdidas.')){state.ativos=structuredClone(DEFAULT);save();render()}">Restaurar</button>
+    </div>
+  </div>
+  <div class="card"><b>Instalar no celular</b>
+    <p class="note" style="margin-top:6px">No Chrome: menu ⋮ → <b>Instalar app</b> (ou "Adicionar à tela inicial").</p>
+  </div>`;
+}
+
+/* ======== edição ======== */
+function editar(t){
+  const a = state.ativos.find(x=>x.t===t); const d = document.getElementById('dlg');
+  d.innerHTML = `
+    <div class="tk">${a.t}</div><div class="nm" style="max-width:none">${esc(a.n)}</div>
+    <label>Quantidade</label><input id="eq" type="number" inputmode="numeric" value="${a.q}">
+    <label>Preço médio (R$)</label><input id="epm" type="text" inputmode="decimal" value="${a.pm!=null?String(a.pm).replace('.',','):''}">
+    <label>Cotação manual (R$) <span class="small">— só se a atualização falhar</span></label><input id="ep" type="text" inputmode="decimal" value="${String(a.p).replace('.',',')}">
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn sec" onclick="document.getElementById('dlg').close()">Cancelar</button>
+      <button class="btn" onclick="salvarEd('${a.t}')">Salvar</button>
+    </div>
+    <button class="btn sec" style="margin-top:8px;color:var(--red)" onclick="if(confirm('Remover ${a.t} da carteira?')){state.ativos=state.ativos.filter(x=>x.t!=='${a.t}');save();document.getElementById('dlg').close();render()}">Remover ativo</button>`;
+  d.showModal();
+}
+const pnum = s => { s=String(s).trim().replace(/\./g,'').replace(',','.'); const v=parseFloat(s); return isNaN(v)?null:v; };
+function salvarEd(t){
+  const a = state.ativos.find(x=>x.t===t);
+  a.q = parseInt(document.getElementById('eq').value)||0;
+  a.pm = pnum(document.getElementById('epm').value);
+  const p = pnum(document.getElementById('ep').value); if (p) a.p = p;
+  save(); document.getElementById('dlg').close(); render();
+}
+function novoAtivo(){
+  const d = document.getElementById('dlg');
+  d.innerHTML = `<b>Novo ativo</b>
+    <label>Ticker</label><input id="nt" placeholder="ex.: ITSA4" autocapitalize="characters">
+    <label>Nome</label><input id="nn">
+    <label>Classe</label><select id="nc">${CLASSES.slice(1).map(c=>`<option>${c}</option>`).join('')}</select>
+    <label>Quantidade</label><input id="nq" type="number" inputmode="numeric">
+    <label>Preço médio (R$)</label><input id="npm" inputmode="decimal">
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn sec" onclick="document.getElementById('dlg').close()">Cancelar</button>
+      <button class="btn" onclick="addAtivo()">Adicionar</button>
+    </div>`;
+  d.showModal();
+}
+function addAtivo(){
+  const t = document.getElementById('nt').value.trim().toUpperCase(); if(!t) return;
+  const pm = pnum(document.getElementById('npm').value);
+  state.ativos.push({t, n:document.getElementById('nn').value||t, c:document.getElementById('nc').value,
+    q:parseInt(document.getElementById('nq').value)||0, pm, p:pm||0, chg:null, ts:null});
+  save(); document.getElementById('dlg').close(); render(); atualizar();
+}
+
+/* ======== navegação ======== */
+const TITLES = {carteira:'Carteira', indicadores:'Indicadores', analise:'Análise', config:'Ajustes'};
+function go(t){ tab=t; document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t)); render(); scrollTo(0,0); }
+function render(keepFocus){
+  if (keepFocus){ // não redesenha o campo enquanto digita na simulação
+    const inp = document.activeElement; const pos = inp && inp.selectionStart;
+    document.getElementById('view').innerHTML = telaAnalise();
+    const n = document.querySelector('#view input[type=number]'); if(n){ n.focus(); try{n.setSelectionRange(pos,pos)}catch(e){} }
+    return;
+  }
+  document.getElementById('title').textContent = TITLES[tab];
+  document.getElementById('view').innerHTML =
+    tab==='carteira'?telaCarteira(): tab==='indicadores'?telaIndicadores(): tab==='analise'?telaAnalise(): telaConfig();
+}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
+document.getElementById('refreshBtn').onclick = atualizar;
+
+setStatus(state.lastUpdate ? `Atualizado ${fmtHora(state.lastUpdate)}` : 'Cotações de 21/11 (toque em Atualizar)');
+render();
+if (state.token) atualizar();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
