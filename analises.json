@@ -14,7 +14,9 @@
         "Dívida líquida ~R$ 24 bi e alavancagem de 3,3x (era 3,2x)",
         "Unidade de Otacílio Costa parada após acidente; Safra estima impacto de 4% a 7% no EBITDA",
         "A favor: lucro acima do esperado e dólar alto ajuda a exportação; contra: maior peso da carteira (~13%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "O problema é do ciclo do papel e da dívida, não algo que quebrou a empresa. Vender agora realizaria a perda perto do fundo; melhor só não aumentar a posição."
     },
     "BBAS3": {
       "sinal": "desfavoravel",
@@ -29,7 +31,9 @@
         "XP cortou o preço-alvo de R$ 21 para R$ 15 (19/11); BTG e JPMorgan mais cautelosos",
         "Governo avalia trocar a presidente do banco (notícia de 21/11, sem decisão oficial)",
         "A favor: P/VP perto de 0,5 e posição com peso moderado"
-      ]
+      ],
+      "vender": false,
+      "venda": "O banco está num momento ruim, mas segue lucrando e a ação já está muito barata. Vender agora realizaria uma perda de ~25% perto do fundo; vale reavaliar se a inadimplência continuar subindo."
     },
     "CMIG4": {
       "sinal": "neutro",
@@ -44,7 +48,9 @@
         "Troca de CEO pela segunda vez em cerca de três meses",
         "Capex alto (R$ 5,1 bi no ano) limita dividendos",
         "Peso pequeno na carteira (~1,6%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Empresa lucrativa e posição pequena; nada que justifique vender."
     },
     "AXIA3": {
       "sinal": "favoravel",
@@ -59,7 +65,9 @@
         "Genial mantém compra com alvo de R$ 69",
         "Contra: lucro ajustado em IFRS caiu 19% e EBITDA IFRS −23%",
         "Cotação abaixo do seu preço médio; peso pequeno (~1,2%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Fundamentos bons e dividendos altos; não há motivo para vender."
     },
     "TAEE11": {
       "sinal": "neutro",
@@ -74,7 +82,9 @@
         "Genial recomenda manter",
         "Receita previsível e protegida pela inflação",
         "Cotação acima do preço médio; peso pequeno (~0,8%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Renda estável e previsível; não há motivo para vender."
     },
     "WEGE3": {
       "sinal": "neutro",
@@ -89,7 +99,9 @@
         "A favor: retorno sobre capital de 33% e receita externa recorde",
         "BTG mantém compra (alvo R$ 65); dólar alto ajuda",
         "Cotação ~20% acima do preço médio: pouco desconto"
-      ]
+      ],
+      "vender": false,
+      "venda": "Empresa de alta qualidade e com lucro sobre o preço médio; não há motivo para vender."
     },
     "TOTS3": {
       "sinal": "neutro",
@@ -104,7 +116,9 @@
         "Receita recorrente forte (~R$ 8 bi ao ano)",
         "Caiu 14,5% após a eleição; BlackRock informou participação de ~5% (20/11)",
         "Peso pequeno na carteira (~0,6%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "A operação vai bem; a queda veio mais do mercado. Não há motivo para vender."
     },
     "WRLD11": {
       "sinal": "neutro",
@@ -119,7 +133,9 @@
         "Futuros dos EUA abriram em forte alta nesta segunda: mercado muito instável",
         "Boa diversificação contra riscos do Brasil",
         "Cotação acima do preço médio; peso pequeno (~0,8%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Serve de proteção contra riscos do Brasil e está com lucro; não há motivo para vender."
     },
     "URPR11": {
       "sinal": "desfavoravel",
@@ -134,7 +150,9 @@
         "Valor patrimonial caiu para R$ 85,33",
         "A favor: P/VP extremamente baixo (~0,18)",
         "Peso alto na carteira (~10%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "A situação é grave, mas o preço já embute muito pessimismo (cota a 17% do valor patrimonial) e o dividendo atual ainda rende bem sobre o preço de hoje. Vender agora travaria uma perda de ~60%; é para não aumentar e acompanhar de perto."
     },
     "HABT11": {
       "sinal": "neutro",
@@ -149,7 +167,9 @@
         "Resultado do 3º trimestre caiu 4,5%",
         "A favor: P/VP de 0,61, desconto grande",
         "Peso de ~5% na carteira"
-      ]
+      ],
+      "vender": false,
+      "venda": "Dividendo estável e desconto grande; falta saber o tamanho dos créditos com problema antes de decidir algo."
     },
     "MXRF11": {
       "sinal": "neutro",
@@ -164,7 +184,9 @@
         "A favor: carteira de 91 CRIs bem diversificada; 7 em alerta ou estressados",
         "P/VP perto de 0,92: desconto pequeno",
         "Peso de ~4% na carteira"
-      ]
+      ],
+      "vender": false,
+      "venda": "Fundo grande e diversificado, perda pequena; não há motivo para vender."
     },
     "ARRI11": {
       "sinal": "desfavoravel",
@@ -179,7 +201,9 @@
         "CRI Raposo renegociado em setembro",
         "Caixa baixo e pouca liquidez na bolsa",
         "A favor: P/VP muito baixo (~0,36)"
-      ]
+      ],
+      "vender": true,
+      "venda": "O que o fundo ganha hoje (~R$ 0,02 por cota ao mês) rende cerca de 8% ao ano sobre o preço, menos do que o Tesouro Selic depois do imposto, e os problemas de crédito continuam. O dividendo atual deve cair. Vender com prejuízo também permite abater esse prejuízo de lucros futuros com FIIs no imposto."
     },
     "VGHF11": {
       "sinal": "desfavoravel",
@@ -194,7 +218,9 @@
         "Metade da carteira em ativos ilíquidos que geram pouco caixa",
         "Perdendo cotistas (385 mil para 358 mil)",
         "A favor: P/VP perto de 0,5"
-      ]
+      ],
+      "vender": false,
+      "venda": "Está ruim e piorando devagar, mas o rendimento sobre o preço atual ainda supera o Tesouro Selic líquido. Fica no limite: se houver novo corte de dividendo, passa a valer a pena vender."
     },
     "JSAF11": {
       "sinal": "favoravel",
@@ -209,7 +235,9 @@
         "P/VP perto de 0,69: bom desconto",
         "Contra: paga praticamente tudo que ganha, sem reserva",
         "Investe em outros FIIs: sofre quando o setor cai"
-      ]
+      ],
+      "vender": false,
+      "venda": "Dividendo estável e sem problemas; não há motivo para vender."
     },
     "VGIR11": {
       "sinal": "neutro",
@@ -224,7 +252,9 @@
         "Sem inadimplência relatada nos relatórios lidos",
         "P/VP perto de 0,83",
         "Queda forte recente da cota sem fato relevante"
-      ]
+      ],
+      "vender": false,
+      "venda": "Sem inadimplência relatada e rendimento alto; não há motivo para vender."
     },
     "GARE11": {
       "sinal": "favoravel",
@@ -239,7 +269,9 @@
         "P/VP perto de 0,87",
         "Contra: Carrefour ainda é ~38% da receita",
         "Peso pequeno (~1,7%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Fundo saudável; não há motivo para vender."
     },
     "CYCR11": {
       "sinal": "favoravel",
@@ -254,7 +286,9 @@
         "Contra: resultado de outubro abaixo do pagamento",
         "Reserva pequena (~R$ 0,3 mi)",
         "Peso pequeno (~1,7%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Todos os créditos em dia; não há motivo para vender."
     },
     "VCRI11": {
       "sinal": "desfavoravel",
@@ -269,7 +303,9 @@
         "Casa e Vídeo em recuperação judicial",
         "Resultado de R$ 0,075 contra R$ 0,09 pagos; reserva diminuindo",
         "A favor: P/VP perto de 0,69"
-      ]
+      ],
+      "vender": false,
+      "venda": "Tem problemas de crédito, mas o resultado atual ainda rende cerca de 14% ao ano sobre o preço, acima do Tesouro Selic líquido, e a posição é pequena. Vale reavaliar se o dividendo cair de novo."
     },
     "SNAG11": {
       "sinal": "neutro",
@@ -284,7 +320,9 @@
         "P/VP perto de 0,94: pouco desconto",
         "Peso alto na carteira (~12%)",
         "Setor agro com recorde de recuperações judiciais"
-      ]
+      ],
+      "vender": false,
+      "venda": "Fundo saudável; só não convém aumentar pela concentração."
     },
     "AAZQ11": {
       "sinal": "desfavoravel",
@@ -299,7 +337,9 @@
         "Ações judiciais em caso ligado à Operação Greenwashing",
         "Peso alto na carteira (~10%)",
         "A favor: P/VP perto de 0,62; gestora fala em retomada gradual"
-      ]
+      ],
+      "vender": false,
+      "venda": "Está sem pagar dividendos, mas o preço já tem desconto grande (P/VP 0,63) e a gestora prevê retomada. Vender agora travaria ~28% de perda; a decisão depende de o pagamento voltar nos próximos meses."
     },
     "XPCA11": {
       "sinal": "neutro",
@@ -314,7 +354,9 @@
         "P/VP perto de 0,67",
         "Queda forte recente da cota sem explicação encontrada",
         "Peso relevante (~7,6%) e setor agro em crise"
-      ]
+      ],
+      "vender": false,
+      "venda": "Perda conhecida e o resto da carteira em dia, com desconto grande; não há motivo forte para vender."
     },
     "VGIA11": {
       "sinal": "desfavoravel",
@@ -329,7 +371,9 @@
         "P/VP perto de 0,9: pouco desconto para o risco",
         "Setor agro com recorde de recuperações judiciais",
         "Peso de ~5% na carteira"
-      ]
+      ],
+      "vender": false,
+      "venda": "O calote da Languiru é sério, mas o dividendo ainda rende bem acima do Tesouro Selic e a perda é pequena. Se o fundo cortar mais o dividendo, vale reavaliar."
     },
     "RURA11": {
       "sinal": "desfavoravel",
@@ -344,7 +388,9 @@
         "Dividendo caiu de R$ 0,11 para R$ 0,09–0,10",
         "A favor: Dacalda voltou a pagar e há lucro acumulado de R$ 11,8 mi",
         "P/VP perto de 0,70"
-      ]
+      ],
+      "vender": true,
+      "venda": "O que o fundo ganha hoje (~R$ 0,06 por cota ao mês) rende cerca de 10% ao ano sobre o preço, abaixo do Tesouro Selic depois do imposto, e os calotes estão aumentando (Grupo Leal). Está pagando mais do que ganha, então o dividendo tende a cair. Caso no limite: se o resultado voltar a subir, a estrela sai."
     },
     "RZAG11": {
       "sinal": "neutro",
@@ -359,7 +405,9 @@
         "Assembleia prorrogada pela 5ª vez (votos até 30/11) sobre emissão para o LSAG11, com conflito de interesses",
         "P/VP perto de 0,78",
         "Peso pequeno (~1,6%)"
-      ]
+      ],
+      "vender": false,
+      "venda": "Dividendo estável e alto; vale esperar o resultado da assembleia de 30/11 antes de decidir."
     }
   }
 }

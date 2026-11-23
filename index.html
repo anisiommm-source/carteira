@@ -418,7 +418,8 @@ function veredito(t){ const v = state.analises && state.analises.ativos && state
 function seloVeredito(t){
   const v = veredito(t); if (!v) return '';
   const s = SINAIS[v.sinal];
-  return ` <span class="pill" style="background:${s.bg};color:${s.cor};font-weight:600">${s.ico} ${s.curto}</span>`;
+  return ` <span class="pill" style="background:${s.bg};color:${s.cor};font-weight:600">${s.ico} ${s.curto}</span>` +
+    (v.vender===true ? ` <span class="pill" title="Melhor vender" style="background:rgba(245,184,74,.18);color:var(--warn);font-weight:600">⭐ Vender</span>` : '');
 }
 function cardVeredito(a){
   const v = veredito(a.t);
@@ -431,6 +432,7 @@ function cardVeredito(a){
     <p class="note" style="margin-top:8px;color:var(--text)">${esc(v.resumo)}</p>
     ${v.origem?`<p class="small muted" style="margin-top:6px">Queda vem ${v.origem==='mercado'?'principalmente do <b>mercado em geral</b>':v.origem==='proprio'?'principalmente do <b>próprio ativo</b>':'do <b>mercado e do próprio ativo</b>'}.</p>`:''}
     ${v.motivos&&v.motivos.length?`<ul class="chk">${v.motivos.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''}
+    ${v.venda?`<p class="note" style="margin-top:8px;color:var(--text)">${v.vender===true?'<b>⭐ Melhor vender:</b> ':'<b>Vender?</b> Não por enquanto. '}${esc(v.venda)}</p>`:''}
     <p class="small muted" style="margin-top:6px">Cotação na análise: ${brl(v.cotacao)}${mov!=null?` · hoje ${pct(mov,1)}`:''}</p>
     ${velho?`<p class="small warnc" style="margin-top:4px">⚠ O preço mudou bastante desde a análise — ela pode estar desatualizada.</p>`:''}
   </div>`;
